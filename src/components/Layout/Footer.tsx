@@ -49,7 +49,7 @@ function AppFooter() {
             <p className="text-lg uppercase font-semibold">Giới thiệu</p>
             <div className="bg-white-016 h-[1px] w-full" />
             <p className="text-sm font-medium w-[360px]">
-              Đặt sân 247 cung cấp các tiện ích thông minh giúp cho bạn tìm sân
+              House Sport cung cấp các tiện ích thông minh giúp cho bạn tìm sân
               bãi và đặt sân một cách hiệu quả nhất.
             </p>
             <div className="flex flex-col gap-3 font-medium text-sm">
@@ -75,7 +75,7 @@ function AppFooter() {
             <span className="underline font-medium">Chính sách</span>
             <span className="underline font-medium">Giới thiệu</span>
           </div>
-          <p className="font-medium">© 2024 Yeah1Sport. ALL Right Reserved</p>
+          <p className="font-medium">© 2024 House Sport. ALL Right Reserved</p>
         </div>
       </Container>
     </div>

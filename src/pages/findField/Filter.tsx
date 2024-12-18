@@ -114,13 +114,6 @@ function Filter() {
     setIsLoading(true);
     const [startTime, endTime] = values.timeFrame.split(" - ");
 
-    const date = dayjs(
-      `${dayjs(values.date).format("YYYY-MM-DD")} ${startTime}`,
-      "DD-MM-YYYY HH:mm"
-    );
-
-    console.log(date);
-
     const dataForm = omit({
       date: dayjs(values.date).format("YYYY-MM-DD"),
       startTime,
@@ -269,7 +262,22 @@ function Filter() {
                 <InputNumber className="w-full" />
               </Form.Item>
             </Col>
-            <Col span={24} className="flex justify-end mt-2">
+            <Col span={24} className="flex justify-end mt-2 gap-1">
+              <Button
+                htmlType="button"
+                type="default"
+                color="danger"
+                onClick={() => {
+                  setListField([]);
+                  setProvinces([]);
+                  setDistricts([]);
+                  setWards([]);
+                  setDateInfo({ date: "", endTime: "", startTime: "" });
+                  form.resetFields();
+                }}
+              >
+                Xoá bộ lọc
+              </Button>
               <Button htmlType="submit" type="primary" loading={isLoading}>
                 Tìm kiếm
               </Button>
