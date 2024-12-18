@@ -1,1 +1,0 @@
-window._env_ = {"PORT":"4001","API_URL":"http://localhost:3000/api","CMS_URL":"http://localhost:4000/"};

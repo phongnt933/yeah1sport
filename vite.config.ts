@@ -6,7 +6,7 @@ import viteEnvToWindowPlugin from "./config-env";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [viteEnvToWindowPlugin(), react()],
+  plugins: [react()],
   resolve: {
     alias: {
       src: path.resolve(__dirname, "./src"),
