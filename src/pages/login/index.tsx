@@ -106,7 +106,7 @@ function LoginPage() {
           <Image
             preview={false}
             src={IMAGES.logo_dark}
-            alt="House Sport"
+            alt="Home Sport"
             className="!h-16 mb-4"
           />
           <Typography.Title level={2} style={{ marginBottom: 40 }}>

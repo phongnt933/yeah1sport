@@ -26,7 +26,7 @@ function HomePage() {
             </h3>
             <div className="h-1 w-10 rounded-md bg-highlight mb-2" />
             <p className="font-medium">
-              Dữ liệu được House Sport cập nhật thường xuyên giúp cho người dùng
+              Dữ liệu được Home Sport cập nhật thường xuyên giúp cho người dùng
               tìm được sân một cách nhanh nhất
             </p>
           </div>
