@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tdm-white-000: rgba(255, 255, 255, 0);
+  --tdm-white-008: rgba(255, 255, 255, 0.08);
+  --tdm-white-016: rgba(255, 255, 255, 0.16);
+  --tdm-white-032: rgba(255, 255, 255, 0.32);
+  --tdm-white-048: rgba(255, 255, 255, 0.48);
+  --tdm-white-064: rgba(255, 255, 255, 0.64);
+  --tdm-white-080: rgba(255, 255, 255, 0.8);
+  --tdm-white-100: rgba(255, 255, 255, 1);
+
+  --tdm-black-008: rgba(0, 0, 0, 0.08);
+  --tdm-black-016: rgba(0, 0, 0, 0.16);
+  --tdm-black-032: rgba(0, 0, 0, 0.32);
+  --tdm-black-048: rgba(0, 0, 0, 0.48);
+  --tdm-black-064: rgba(0, 0, 0, 0.64);
+  --tdm-black-080: rgba(0, 0, 0, 0.8);
+  --tdm-black-100: rgba(0, 0, 0, 1);
+
+  --tdm-highlight: rgba(247, 127, 0, 1);
+  --tdm-highlight-dark: rgba(247, 107, 0, 1);
+
+  --tdm-primary-text-color: rgba(38, 38, 38, 1);
+  --tdm-secondary-text-color: var(--tdm-black-064);
+
+  --tdm-primary-background: #00514a;
+  --tdm-secondary-background: var(--tdm-white-100);
+
+  --tdm-card-shadow: 0px 4px 48px 0px rgba(0, 0, 0, 0.12);
+
+  --tdm-scrollbar-width: 6px;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "SVN-Gilroy", sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
+  -webkit-tap-highlight-color: transparent; /* Prevent touch background */
+}
+
+body {
+  margin: 0;
+  background: var(--tdm-white-100);
+  overscroll-behavior-x: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: unset;
+  color: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.gradient-typography {
+  @apply font-bold uppercase;
+  background: linear-gradient(89deg, #fd4900 0%, #ff7600 30%, #f90 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.size-16-9 {
+  @apply relative w-full h-0 pt-[56.25%];
+}
+
+.field-container {
+  min-width: min(300px, calc(100vw - 48px - var(--tdm-scrollbar-width)));
+  @apply max-w-[300px] bg-secondary-background rounded-2xl snap-start z-10;
+  box-shadow: 0px 8px 96px 0px rgba(0, 0, 0, 0.12);
+}
+
+.field-thumbnail {
+  @apply w-full h-full absolute top-0 left-0 rounded-t-2xl;
+}
+
+.field-thumbnail-layer {
+  @apply w-full h-full absolute top-0 left-0;
+  background: linear-gradient(
+    180deg,
+    var(--tdm-white-000) 70%,
+    var(--tdm-white-100) 100%
+  );
+}
+
+.field-type {
+  @apply text-sm;
+}
+
+.field-name {
+  @apply text-xl font-semibold;
+}
+
+.field-location {
+  @apply text-sm;
+}
+
+.field-content {
+  @apply px-4 py-4;
+}
