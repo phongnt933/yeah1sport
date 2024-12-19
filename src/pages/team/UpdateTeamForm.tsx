@@ -11,14 +11,14 @@ import {
   Row,
   Select,
 } from "antd";
-import { ESport } from "../../constants/sport";
 import InputEmail from "../../components/InputEmail";
 import { updateMyTeam } from "../../apis/team";
 import { toast } from "react-toastify";
+import { FIELD_TYPE } from "src/constants/field";
 
 type FieldType = {
   name: string;
-  sport: string;
+  type: string;
   description?: string;
 };
 
@@ -30,7 +30,6 @@ interface UpdateTeamFormProps {
 
 function UpdateTeamForm(props: UpdateTeamFormProps) {
   const { onClose, team, reload } = props;
-  console.log(team);
   const [members, setMembers] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -41,7 +40,7 @@ function UpdateTeamForm(props: UpdateTeamFormProps) {
       formRecord.setFieldsValue({
         description: team.description,
         name: team.name,
-        sport: team.sport,
+        type: team.type,
       });
     }
     setMembers(team ? team.members.map((member) => member.email) : []);
@@ -58,24 +57,29 @@ function UpdateTeamForm(props: UpdateTeamFormProps) {
   };
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    setIsLoading(true);
-    await updateMyTeam({
-      body: { ...values, members: [...members] },
-      successHandler: {
-        callBack() {
-          toast.success("Tạo đội thành công!");
-          setIsLoading(false);
-          onClose();
+    if (team) {
+      setIsLoading(true);
+      await updateMyTeam({
+        param: {
+          id: team.id,
         },
-      },
-      errorHandler: {
-        callBack() {
-          toast.error("Tạo đội thất bại!");
-          setIsLoading(false);
+        body: { ...values, members: [...members] },
+        successHandler: {
+          callBack() {
+            toast.success("Cập nhất đội thành công!");
+            setIsLoading(false);
+            onClose();
+          },
         },
-      },
-    });
-    reload();
+        errorHandler: {
+          callBack() {
+            toast.error("Cập nhất đội thất bại!");
+            setIsLoading(false);
+          },
+        },
+      });
+      reload();
+    }
   };
 
   return (
@@ -110,16 +114,16 @@ function UpdateTeamForm(props: UpdateTeamFormProps) {
           <Col span={12}>
             <Form.Item<FieldType>
               label="Môn thể thao"
-              name="sport"
+              name="type"
               style={{ marginBottom: 8 }}
               rules={[
                 { required: true, message: "Vui lòng chọn môn thể thao" },
               ]}
             >
               <Select
-                defaultValue={team?.sport || ""}
+                defaultValue={team?.type || ""}
                 placeholder="Chọn môn thể thao"
-                options={Object.values(ESport).map((item) => ({
+                options={Object.values(FIELD_TYPE).map((item) => ({
                   value: item,
                   label: item,
                 }))}

@@ -13,8 +13,6 @@ function AppHeader() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  console.log(userInfo);
-
   return (
     <div className="bg-primary-background text-base font-semibold text-white-100 sticky">
       <Container>

@@ -13,11 +13,11 @@ import {
 import { toast } from "react-toastify";
 import { createMyTeam } from "../../apis/team";
 import InputEmail from "../../components/InputEmail";
-import { ESport } from "../../constants/sport";
+import { FIELD_TYPE } from "src/constants/field";
 
 type FieldType = {
   name: string;
-  sport: string;
+  type: string;
   description?: string;
 };
 
@@ -91,7 +91,7 @@ function CreateTeamForm(props: ICreateTeamFormProps) {
           <Col span={12}>
             <Form.Item<FieldType>
               label="Môn thể thao"
-              name="sport"
+              name="type"
               style={{ marginBottom: 8 }}
               rules={[
                 { required: true, message: "Vui lòng chọn môn thể thao" },
@@ -99,7 +99,7 @@ function CreateTeamForm(props: ICreateTeamFormProps) {
             >
               <Select
                 placeholder="Chọn môn thể thao"
-                options={Object.values(ESport).map((item) => ({
+                options={Object.values(FIELD_TYPE).map((item) => ({
                   value: item,
                   label: item,
                 }))}

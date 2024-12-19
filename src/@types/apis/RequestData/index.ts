@@ -33,15 +33,31 @@ export interface RDRegister extends RDCommon {
   };
 }
 
-export type TCreateTeam = {
-  name: string;
-  sport: string;
-  description?: string;
-  members: string[];
-};
-
 export interface RDCreateMyTeam extends RDCommon {
-  body: TCreateTeam;
+  body: {
+    name: string;
+    type: string;
+    description?: string;
+    members: string[];
+  };
+}
+
+export interface RDEditMyTeam extends RDCommon {
+  param: {
+    id: string;
+  };
+  body: {
+    name?: string;
+    type?: string;
+    description?: string;
+    members?: string[];
+  };
+}
+
+export interface RDDeleteMyTeam extends RDCommon {
+  param: {
+    id: string;
+  };
 }
 
 export interface RDFindField extends RDCommon {

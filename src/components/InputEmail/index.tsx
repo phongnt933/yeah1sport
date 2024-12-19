@@ -41,7 +41,12 @@ function InputEmail(props: InputEmailProps) {
       </Flex>
       <Flex wrap gap={8}>
         {value?.map((item) => (
-          <Tag closable onClose={handleDelete(item)} style={{ margin: 0 }}>
+          <Tag
+            closable
+            key={item}
+            onClose={handleDelete(item)}
+            style={{ margin: 0 }}
+          >
             {item}
           </Tag>
         ))}

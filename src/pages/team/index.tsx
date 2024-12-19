@@ -10,15 +10,15 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { ITeam } from "../../@types/entities/Team";
-import { getMyTeam } from "../../apis/team";
+import { deleteMyTeam, getMyTeam, updateMyTeam } from "../../apis/team";
 import { useAppSelector } from "../../redux";
 import UpdateTeamForm from "./UpdateTeamForm";
 import { cloneDeep } from "lodash";
+import { toast } from "react-toastify";
 
 function TeamPage() {
   const userInfo = useAppSelector((s) => s.auth.storage);
   const [listTeam, setListTeam] = useState<ITeam[]>([]);
-  const [isLeader, setIsLeader] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [openCreateTeam, setOpenCreateTeam] = useState<boolean>(false);
   const [openEditTeam, setOpenEditTeam] = useState<ITeam | null>(null);
@@ -30,11 +30,6 @@ function TeamPage() {
         callBack(data) {
           if (data.data) {
             setListTeam(data.data);
-            if (data.data.some((item) => item.captain._id === userInfo?.id)) {
-              setIsLeader(false);
-            } else {
-              setIsLeader(true);
-            }
           } else {
             setListTeam([]);
           }
@@ -82,15 +77,15 @@ function TeamPage() {
     },
     {
       title: "Môn thể thao",
-      dataIndex: "sport",
-      key: "sport",
-      render: (sport) => sport,
+      dataIndex: "type",
+      key: "type",
+      render: (type) => type,
     },
     {
       title: "Đội trưởng",
       dataIndex: "captain",
       key: "captain",
-      render: (_, { captain }) => captain.username,
+      render: (_, { captain }) => captain.name,
     },
     {
       title: "Số lượng thành viên",
@@ -104,17 +99,52 @@ function TeamPage() {
       key: "members",
       render: (_, data) => (
         <Flex style={{ gap: 8 }}>
-          {userInfo?.id === data.captain._id ? (
+          {userInfo?.id === data.captain.id ? (
             <>
               <Button
                 type="primary"
                 icon={<EditOutlined />}
                 onClick={handleOpenEditTeam(data)}
               />
-              <Button type="primary" danger icon={<DeleteOutlined />} />
+              <Button type="primary" danger icon={<DeleteOutlined />}  onClick={async() => {
+                 await deleteMyTeam({
+                   param: {
+                     id: data.id,
+                   },
+                  
+                   successHandler: {
+                     callBack() {
+                       toast.success("Xoá đội thành công!");
+                       handleReload();
+                     },
+                   },
+                 });
+              }}/>
             </>
           ) : (
-            <Button type="primary" danger icon={<LogoutOutlined />} />
+            <Button
+              type="primary"
+              danger
+              icon={<LogoutOutlined />}
+              onClick={async () => {
+                await updateMyTeam({
+                  param: {
+                    id: data.id,
+                  },
+                  body: {
+                    members: data.members
+                      .filter((member) => member.email !== userInfo?.email)
+                      .map((member) => member.email),
+                  },
+                  successHandler: {
+                    callBack() {
+                      toast.success("Đã rời đội thành công!");
+                      handleReload();
+                    },
+                  },
+                });
+              }}
+            />
           )}
         </Flex>
       ),
@@ -136,9 +166,7 @@ function TeamPage() {
             <Typography.Title level={3} style={{ margin: 0 }}>
               Quản lý đội của tôi
             </Typography.Title>
-            {isLeader && (
-              <Button onClick={handleOpenCreateTeam}>Tạo đội mới</Button>
-            )}
+            <Button onClick={handleOpenCreateTeam}>Tạo đội mới</Button>
           </Flex>
           <Table<ITeam>
             columns={columns}

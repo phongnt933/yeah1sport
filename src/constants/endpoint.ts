@@ -5,9 +5,10 @@ enum END_POINT {
   CREATE_BOOKING = "/bookings/create-booking",
   CAPTURE_BOOKING = "/bookings/capture-booking",
   GET_LIST_BOOKING = "/bookings",
+  GET_LIST_TEAM = "/teams",
+  CREATE_TEAM = "/teams/create",
+  EDIT_TEAM = "/teams/:id",
 
-  MY_TEAM = "/user/team",
-  FIELD = "/user/field",
   MATCHING = "/user/matching",
 }
 

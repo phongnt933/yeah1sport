@@ -1,15 +1,15 @@
 export interface ITeam {
-  teamId: string;
+  id: string;
   name: string;
   description: string;
-  sport: string;
+  type: string;
   captain: {
-    _id: string;
-    username: string;
+    id: string;
+    name: string;
   };
   members: Array<{
-    _id: string;
-    username: string;
+    id: string;
+    name: string;
     email: string;
   }>;
 }
