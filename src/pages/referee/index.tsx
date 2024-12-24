@@ -59,7 +59,7 @@ function RefereePage() {
                 Thuê trọng tài/huấn luyện viên
               </Typography.Title>
             </div>
-            <div className="flex gap-6">
+            <div className="flex gap-6 flex-wrap">
               {data.map((item) => (
                 <div className="referee-container">
                   <img
