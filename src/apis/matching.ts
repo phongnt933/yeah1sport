@@ -6,7 +6,9 @@ import {
   TResponseErrorCommon,
 } from "../@types/apis";
 import {
+  RDCaptureRefereeOrder,
   RDCreateMatchingField,
+  RDCreateRefereeOrder,
   RDGetListMatching,
   RDJoinMatching,
 } from "../@types/apis/RequestData";
@@ -36,7 +38,7 @@ export const createMatching = async ({
     data: {
       body,
     },
-    path: END_POINT.MATCHING,
+    path: END_POINT.CREATE_MATCHING,
     method: "POST",
     successHandler,
     errorHandler,
@@ -69,7 +71,7 @@ export const getListMatching = async ({
     data: {
       query,
     },
-    path: END_POINT.MATCHING,
+    path: END_POINT.FIND_MATCHING,
     successHandler,
     errorHandler,
   });
@@ -79,12 +81,12 @@ export const getListMatching = async ({
 
 export const joinMatching = async ({
   name = "joinMatching",
-  body,
+  param,
   successHandler,
   errorHandler,
 }: {
   name?: string;
-  body: RDJoinMatching["body"];
+  param: RDJoinMatching["param"];
   successHandler?: TApiProps<
     RDJoinMatching,
     TResponseDataObj<any>,
@@ -99,10 +101,141 @@ export const joinMatching = async ({
   const result = await callApi<RDJoinMatching, TResponseDataObj<any>>({
     name,
     data: {
+      param,
+    },
+    path: END_POINT.JOIN_MATCHING,
+    method: "POST",
+    successHandler,
+    errorHandler,
+  });
+
+  return result;
+};
+
+export const outMatching = async ({
+  name = "outMatching",
+  param,
+  successHandler,
+  errorHandler,
+}: {
+  name?: string;
+  param: RDJoinMatching["param"];
+  successHandler?: TApiProps<
+    RDJoinMatching,
+    TResponseDataObj<any>,
+    any
+  >["successHandler"];
+  errorHandler?: TApiProps<
+    RDJoinMatching,
+    TResponseDataObj<any>,
+    TResponseErrorCommon<undefined>
+  >["errorHandler"];
+}) => {
+  const result = await callApi<RDJoinMatching, TResponseDataObj<any>>({
+    name,
+    data: {
+      param,
+    },
+    path: END_POINT.JOIN_MATCHING,
+    method: "PUT",
+    successHandler,
+    errorHandler,
+  });
+
+  return result;
+};
+
+export const getListReferee = async ({
+  name = "getListReferee",
+  query,
+  successHandler,
+  errorHandler,
+}: {
+  name?: string;
+  query?: RDGetListMatching["query"];
+  successHandler?: TApiProps<
+    RDGetListMatching,
+    TResponseDataArr<any>,
+    any
+  >["successHandler"];
+  errorHandler?: TApiProps<
+    RDGetListMatching,
+    TResponseDataArr<any>,
+    TResponseErrorCommon<undefined>
+  >["errorHandler"];
+}) => {
+  const result = await callApi<RDGetListMatching, TResponseDataArr<any>>({
+    name,
+    data: {
+      query,
+    },
+    path: END_POINT.REFEREE,
+    successHandler,
+    errorHandler,
+  });
+
+  return result;
+};
+
+export const createRefereeOrder = async ({
+  name = "getListReferee",
+  body,
+  successHandler,
+  errorHandler,
+}: {
+  name?: string;
+  body: RDCreateRefereeOrder["body"];
+  successHandler?: TApiProps<
+    RDCreateRefereeOrder,
+    TResponseDataObj<any>,
+    any
+  >["successHandler"];
+  errorHandler?: TApiProps<
+    RDCreateRefereeOrder,
+    TResponseDataObj<any>,
+    TResponseErrorCommon<undefined>
+  >["errorHandler"];
+}) => {
+  const result = await callApi<RDCreateRefereeOrder, TResponseDataObj<any>>({
+    name,
+    data: {
       body,
     },
-    path: END_POINT.MATCHING,
-    method: "PATCH",
+    method: "POST",
+    path: END_POINT.REFEREE,
+    successHandler,
+    errorHandler,
+  });
+
+  return result;
+};
+
+export const captureRefereeOrder = async ({
+  name = "captureRefereeOrder",
+  body,
+  successHandler,
+  errorHandler,
+}: {
+  name?: string;
+  body: RDCaptureRefereeOrder["body"];
+  successHandler?: TApiProps<
+    RDCaptureRefereeOrder,
+    TResponseDataObj<any>,
+    any
+  >["successHandler"];
+  errorHandler?: TApiProps<
+    RDCaptureRefereeOrder,
+    TResponseDataObj<any>,
+    TResponseErrorCommon<undefined>
+  >["errorHandler"];
+}) => {
+  const result = await callApi<RDCaptureRefereeOrder, TResponseDataObj<any>>({
+    name,
+    data: {
+      body,
+    },
+    path: END_POINT.CAPTURE_REFEREE,
+    method: "POST",
     successHandler,
     errorHandler,
   });

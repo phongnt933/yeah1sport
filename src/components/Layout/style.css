@@ -1,0 +1,7 @@
+.menu-item {
+  @apply hover:text-highlight leading-none;
+}
+
+.menu-item.active {
+  @apply text-highlight-dark;
+}

@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Col,
@@ -10,13 +10,13 @@ import {
   Modal,
   Row,
 } from "antd";
-// import { createMatching } from "../../apis/matching";
-import { IBooking } from "../../@types/entities/Booking";
-// import { toast } from "react-toastify";
+import { IBooking } from "src/@types/entities/Booking";
+import { createMatching } from "src/apis/matching";
+import { toast } from "react-toastify";
 
 interface FieldType {
   message?: string;
-  max_number: number;
+  quantity: number;
 }
 
 interface MatchingFormProps {
@@ -28,36 +28,31 @@ interface MatchingFormProps {
 
 function MatchingForm(props: MatchingFormProps) {
   const { data, onClose, open, reload } = props;
-  // const [isLoading, setIsLoading] = useState<boolean>();
+  const [isLoading, setIsLoading] = useState<boolean>();
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     if (data) {
       console.log(values);
-      // setIsLoading(true);
-      // const result = await createMatching({
-      //   body: {
-      //     date: data.date,
-      //     endTime: data.endTime,
-      //     fieldId: data.field,
-      //     max_number: values.max_number,
-      //     message: values.message,
-      //     startTime: data.startTime,
-      //     sport: data.sport,
-      //     totalPrice: data.totalPrice,
-      //   },
-      //   successHandler: {
-      //     callBack(data) {
-      //       toast.success("Matching thành công!");
-      //       setIsLoading(false);
-      //       onClose();
-      //     },
-      //   },
-      //   errorHandler: {
-      //     callBack(error) {
-      //       toast.error("Matching thất bại!");
-      //       setIsLoading(false);
-      //     },
-      //   },
-      // });
+      setIsLoading(true);
+      await createMatching({
+        body: {
+          bookingId: data.id,
+          quantity: values.quantity,
+          message: values.message || "",
+        },
+        successHandler: {
+          callBack() {
+            toast.success("Matching thành công!");
+            setIsLoading(false);
+            onClose();
+          },
+        },
+        errorHandler: {
+          callBack() {
+            toast.error("Matching thất bại!");
+            setIsLoading(false);
+          },
+        },
+      });
       reload();
     }
   };
@@ -68,10 +63,11 @@ function MatchingForm(props: MatchingFormProps) {
 
   return (
     <Modal
-      title="Tạo matching"
+      title="Cáp kéo - tìm đối thủ"
       open={open}
       footer={null}
       destroyOnClose
+      centered
       closable={false}
     >
       <Form layout="vertical" onFinish={onFinish} autoComplete="off">
@@ -80,7 +76,7 @@ function MatchingForm(props: MatchingFormProps) {
             <Form.Item<FieldType>
               label="Số lượng"
               style={{ marginBottom: 8 }}
-              name="max_number"
+              name="quantity"
               rules={[
                 { required: true, message: "Vui lòng nhập số lượng cần tuyển" },
               ]}
@@ -106,9 +102,9 @@ function MatchingForm(props: MatchingFormProps) {
               <Button type="primary" danger onClick={handleCancel}>
                 Huỷ
               </Button>
-              {/* <Button htmlType="submit" type="primary" loading={isLoading}>
-                Đẩy matching
-              </Button> */}
+              <Button htmlType="submit" type="primary" loading={isLoading}>
+                Tìm người
+              </Button>
             </Flex>
           </Col>
         </Row>

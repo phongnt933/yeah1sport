@@ -1,9 +1,8 @@
-import AppHeader from "../../components/Layout/Header";
+import AppHeader from "src/components/Layout/Header";
 import { Flex } from "antd";
-import Container from "../../components/Container";
-import AppFooter from "../../components/Layout/Footer";
-import CreateMatching from "./CreateMatching";
-// import FindMatching from "./FindMatching";
+import Container from "src/components/Container";
+import AppFooter from "src/components/Layout/Footer";
+import FindMatching from "./FindMatching";
 
 function MatchingPage() {
   return (
@@ -19,8 +18,7 @@ function MatchingPage() {
               width: "100%",
             }}
           >
-            <CreateMatching />
-            {/* <FindMatching /> */}
+            <FindMatching />
           </Flex>
         </Container>
       </Flex>

@@ -8,72 +8,51 @@ import {
   Select,
   Typography,
 } from "antd";
-import { useState } from "react";
-import { RDGetListMatching } from "../../@types/apis/RequestData";
-import { getListMatching } from "../../apis/matching";
-import { PAGE_SIZE } from "../../configs";
-import usePagination from "../../hooks/usePagination";
+import { RDGetListMatching } from "src/@types/apis/RequestData";
+import { getListMatching } from "src/apis/matching";
+import usePagination from "src/hooks/usePagination";
 import FootballField from "./FootballField";
-import useSearchParams from "../../hooks/useSearchParams";
-import { ESport } from "../../constants/sport";
-import { EDistrict } from "../../constants/location";
-import { IMatching } from "../../@types/entities/Matching";
-import JoinMatchingForm from "./JoinMatchingForm";
+import useSearchParams from "src/hooks/useSearchParams";
+import { FIELD_TYPE } from "src/constants/field";
+import { EDistrict } from "src/constants/location";
+import { IMatching } from "src/@types/entities/Matching";
 import { omitIsNil } from "src/utils/omit";
 
 type FieldType = {
-  location?: string;
-  sport?: string;
+  district?: string;
+  type?: string;
 };
 
 function FindMatching() {
   const { addParams } = useSearchParams();
-  const [selected, setSelected] = useState<{
-    item: IMatching | null;
-    open: boolean;
-  }>({
-    item: null,
-    open: false,
-  });
-
-  const handleOpen = (record: IMatching) => {
-    console.log(record);
-    setSelected({ item: { ...record }, open: true });
-  };
-
-  const handleClose = () => {
-    setSelected({ item: null, open: false });
-  };
 
   const apiConfig = (query: RDGetListMatching["query"], name?: string) => {
     return getListMatching({
       name,
       query: {
-        ...omitIsNil({ ...query, record: PAGE_SIZE }, { deep: false }),
+        ...omitIsNil(
+          { ...query, record: Number.MAX_SAFE_INTEGER },
+          { deep: false }
+        ),
       },
     });
   };
 
-  const {
-    data,
-    // currentPage,
-    // total,
-    // onPaginationChange,
-    isLoading,
-    // offset,
-    reloadData,
-  } = usePagination<IMatching, RDGetListMatching["query"]>([], apiConfig);
+  const { data, isLoading, reloadData } = usePagination<
+    IMatching,
+    RDGetListMatching["query"]
+  >([], apiConfig);
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     const temp = {
       ...values,
     };
-    if (values.location === "Tất cả") {
-      temp.location = "";
+    if (values.district === "Tất cả") {
+      temp.district = "";
     }
 
-    if (values.sport === "Tất cả") {
-      temp.sport = "";
+    if (values.type === "Tất cả") {
+      temp.type = "";
     }
 
     addParams(temp);
@@ -82,14 +61,14 @@ function FindMatching() {
   return (
     <Flex vertical gap={16}>
       <Typography.Title level={3} style={{ margin: 0 }}>
-        Tìm đối thủ
+        Tìm kèo
       </Typography.Title>
       <Form layout="vertical" onFinish={onFinish} autoComplete="off">
         <Row gutter={16}>
           <Col span={4}>
             <Form.Item<FieldType>
-              label="Vị trí"
-              name="location"
+              label="Quận/Huyện"
+              name="district"
               style={{ marginBottom: 8 }}
             >
               <Select
@@ -106,12 +85,12 @@ function FindMatching() {
           <Col span={4}>
             <Form.Item<FieldType>
               label="Môn thể thao"
-              name="sport"
+              name="type"
               style={{ marginBottom: 8 }}
             >
               <Select
                 placeholder="Chọn môn thể thao"
-                options={Object.values({ ALL: "Tất cả", ...ESport }).map(
+                options={Object.values({ ALL: "Tất cả", ...FIELD_TYPE }).map(
                   (item) => ({
                     value: item,
                     label: item,
@@ -133,19 +112,13 @@ function FindMatching() {
         {data.length > 0 ? (
           <>
             {data.map((item) => (
-              <FootballField data={item} handleClickItem={handleOpen} />
+              <FootballField data={item} reload={reloadData} />
             ))}
           </>
         ) : (
           <Typography.Text>Không tìm thấy</Typography.Text>
         )}
       </Flex>
-      <JoinMatchingForm
-        onClose={handleClose}
-        open={selected.open}
-        data={selected.item}
-        reload={reloadData}
-      />
     </Flex>
   );
 }

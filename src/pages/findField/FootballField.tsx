@@ -50,35 +50,39 @@ function FootballField(props: FootballFieldProps) {
         </div>
         <div className="field-content">
           <div>
-            <p className="field-name">{data.name}</p>
-            <p className="field-location">
-              <span className="font-semibold mr-1">Vị trí:</span>
-              <span>
-                {data.specificAddress}, {data.ward}, {data.district},{" "}
-                {data.province}
-              </span>
-            </p>
-          </div>
-          <div className="flex justify-between gap-2 items-center">
-            <p className="field-location">
-              <span className="font-semibold mr-1">Dụng cụ:</span>
-              <span>{data.equipments.map((item) => item.name).join(", ")}</span>
-            </p>
-            <Tooltip
-              placement="bottom"
-              title={
-                <div className="flex flex-col">
-                  {data.equipments.map((item) => (
-                    <span>
-                      {item.name}: {d3Splitting(data.price)}VNĐ
-                    </span>
-                  ))}
-                </div>
-              }
-              arrow
-            >
-              <IoMdInformationCircleOutline />
-            </Tooltip>
+            <div>
+              <p className="field-name">{data.name}</p>
+              <p className="field-location">
+                <span className="font-semibold mr-1">Vị trí:</span>
+                <span>
+                  {data.specificAddress}, {data.ward}, {data.district},{" "}
+                  {data.province}
+                </span>
+              </p>
+            </div>
+            <div className="flex justify-between gap-2 items-center">
+              <p className="field-location">
+                <span className="font-semibold mr-1">Dụng cụ:</span>
+                <span>
+                  {data.equipments.map((item) => item.name).join(", ")}
+                </span>
+              </p>
+              <Tooltip
+                placement="bottom"
+                title={
+                  <div className="flex flex-col">
+                    {data.equipments.map((item) => (
+                      <span>
+                        {item.name}: {d3Splitting(data.price)}VNĐ
+                      </span>
+                    ))}
+                  </div>
+                }
+                arrow
+              >
+                <IoMdInformationCircleOutline />
+              </Tooltip>
+            </div>
           </div>
           <div className="flex items-center justify-between mt-4">
             <div className="h-9 flex items-center border border-solid border-black-016 px-3 rounded-md">

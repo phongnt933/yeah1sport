@@ -8,8 +8,11 @@ enum END_POINT {
   GET_LIST_TEAM = "/teams",
   CREATE_TEAM = "/teams/create",
   EDIT_TEAM = "/teams/:id",
-
-  MATCHING = "/user/matching",
+  CREATE_MATCHING = "/matchings",
+  JOIN_MATCHING = "/matchings/:id",
+  FIND_MATCHING = "/matchings/find",
+  REFEREE = "/referees",
+  CAPTURE_REFEREE = "/referees/capture",
 }
 
 export default END_POINT;

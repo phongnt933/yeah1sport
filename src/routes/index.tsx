@@ -11,6 +11,8 @@ import NotFoundPage from "../pages/notFound";
 import TeamPage from "../pages/team";
 import FindFieldPage from "../pages/findField";
 import MatchingPage from "../pages/matching";
+import OrderHistoryPage from "src/pages/orderHistory";
+import RefereePage from "src/pages/referee";
 
 interface AppRoute {
   path: string;
@@ -59,8 +61,20 @@ const routes: AppRoute[] = [
   },
   {
     path: ROUTE.MATCHING,
-    title: "Cáp kèo - Tìm đối thử",
+    title: "Tìm đối thử",
     element: MatchingPage,
+    isPrivate: true,
+  },
+  {
+    path: ROUTE.ORDER_HISTORY,
+    title: "Lịch sử đặt sân",
+    element: OrderHistoryPage,
+    isPrivate: true,
+  },
+  {
+    path: ROUTE.REFEREE,
+    title: "Thuê trọng tài",
+    element: RefereePage,
     isPrivate: true,
   },
   {

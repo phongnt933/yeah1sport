@@ -163,12 +163,7 @@ function CreateBookingForm(props: ICreateBookingProps) {
             </tfoot>
           </table>
           <div className="flex gap-4 mt-4 justify-end">
-            <Button
-              className="h-9"
-              color="danger"
-              variant="filled"
-              onClick={onClose}
-            >
+            <Button className="h-9" danger type="primary" onClick={onClose}>
               Huỷ
             </Button>
             <Button className="h-9" onClick={handleOpenPurchase}>

@@ -77,35 +77,29 @@ export interface RDFindField extends RDCommon {
 
 export interface RDGetAllBooking extends RDCommon {
   query?: {
-    p?: number;
-    r?: number;
+    page?: number;
+    record?: number;
   };
 }
 
 export interface RDCreateMatchingField extends RDCommon {
   body: {
-    fieldId: string;
-    startTime: string;
-    endTime: string;
-    date: string;
-    message?: string;
-    max_number: number;
-    sport: string;
-    totalPrice: number;
+    bookingId: string;
+    quantity: number;
+    message: string;
   };
 }
 
 export interface RDGetListMatching extends RDCommon {
   query?: {
-    p?: number;
-    r?: number;
+    page?: number;
+    record?: number;
   };
 }
 
 export interface RDJoinMatching extends RDCommon {
-  body: {
-    matchingId: string;
-    quantity: number;
+  param: {
+    id: string;
   };
 }
 
@@ -121,6 +115,18 @@ export interface RDCreateBooking extends RDCommon {
 }
 
 export interface RDCaptureBooking extends RDCommon {
+  body: {
+    orderId: string;
+  };
+}
+
+export interface RDCreateRefereeOrder extends RDCommon {
+  body: {
+    bookingId: string;
+    refereeId: string;
+  };
+}
+export interface RDCaptureRefereeOrder extends RDCommon {
   body: {
     orderId: string;
   };

@@ -1,12 +1,13 @@
 import { Avatar, Dropdown } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "src/redux";
 import IMAGES from "src/constants/images";
 import ROUTE from "src/constants/routes";
 import { clearData } from "src/redux/slices/authSlice";
 import Container from "../Container";
+import "./style.css";
 
 function AppHeader() {
   const userInfo = useAppSelector((s) => s.auth.storage);
@@ -25,27 +26,24 @@ function AppHeader() {
             src={IMAGES.logo}
           />
           <div className="flex gap-8 items-center">
-            <Link className="hover:text-highlight leading-none" to={ROUTE.HOME}>
+            <NavLink className="menu-item" to={ROUTE.HOME}>
               Trang chủ
-            </Link>
-            <Link
-              className=" hover:text-highlight leading-none"
-              to={ROUTE.MATCHING}
-            >
-              Cáp kèo - Tìm đối thủ
-            </Link>
-            <Link
-              className="hover:text-highlight leading-none"
-              to={ROUTE.FIND_FIELD}
-            >
+            </NavLink>
+            <NavLink className="menu-item" to={ROUTE.MATCHING}>
+              Tìm kèo
+            </NavLink>
+            <NavLink className="menu-item" to={ROUTE.FIND_FIELD}>
               Tìm sân
-            </Link>
-            <Link
-              className="hover:text-highlight leading-none"
-              to={ROUTE.MY_TEAM}
-            >
+            </NavLink>
+            <NavLink className="menu-item" to={ROUTE.MY_TEAM}>
               Tạo đội bóng
-            </Link>
+            </NavLink>
+            <NavLink className="menu-item" to={ROUTE.ORDER_HISTORY}>
+              Lịch sử đặt sân
+            </NavLink>
+            <NavLink className="menu-item" to={ROUTE.REFEREE}>
+              Thuê trọng tài
+            </NavLink>
           </div>
           {userInfo ? (
             <div className="flex items-center gap-3">

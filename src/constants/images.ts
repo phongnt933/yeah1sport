@@ -6,6 +6,7 @@ const IMAGES = {
   bg_item: "/images/bg_item.png",
   thumbnail: "/images/thumbnail.jpg",
   default_thumbnail: "/images/default-thumbnail.png",
+  referee: "/images/referee.jpeg",
 };
 
 export default IMAGES;

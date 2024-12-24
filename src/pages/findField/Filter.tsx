@@ -168,7 +168,11 @@ function Filter() {
                 name="date"
                 rules={[{ required: true, message: "Vui lòng chọn ngày" }]}
               >
-                <DatePicker className="w-full" placeholder="Chọn ngày" />
+                <DatePicker
+                  className="w-full"
+                  placeholder="Chọn ngày"
+                  format="DD/MM/YYYY"
+                />
               </Form.Item>
             </Col>
             <Col span={24}>

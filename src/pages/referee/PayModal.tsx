@@ -1,25 +1,19 @@
 import { Modal } from "antd";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
-import { captureBooking, createBooking } from "src/apis/booking";
-import { IEquipment } from "src/@types/entities/Field";
 import { d3Splitting } from "src/utils/number";
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import { cloneDeep } from "lodash";
 import ROUTE from "src/constants/routes";
+import { captureRefereeOrder, createRefereeOrder } from "src/apis/matching";
 
 interface IPayModalProps {
   open: boolean;
   onSuccess: () => void;
   onClose: () => void;
   data: {
-    fieldId: string;
-    fieldPrice: number;
-    totalAmount: number;
-    startTime: string;
-    endTime: string;
-    equipments: Array<IEquipment & { quantity: number }>;
+    bookingId: string;
+    refereeId: string;
+    refereePrice: number;
   };
 }
 
@@ -28,8 +22,8 @@ function PayModal(props: IPayModalProps) {
   const navigate = useNavigate();
 
   const createOrder = async () => {
-    const response = await createBooking({
-      body: cloneDeep(data),
+    const response = await createRefereeOrder({
+      body: { bookingId: data.bookingId, refereeId: data.refereeId },
     });
 
     if (response.resData) {
@@ -38,7 +32,7 @@ function PayModal(props: IPayModalProps) {
   };
 
   const onApprove = async (data: any) => {
-    await captureBooking({
+    await captureRefereeOrder({
       body: {
         orderId: data.orderID,
       },
@@ -67,7 +61,7 @@ function PayModal(props: IPayModalProps) {
         <p className="text-base mb-4">
           Tổng tiền cần phải thanh toán:{" "}
           <span className="font-semibold">
-            {d3Splitting(data.totalAmount)} VND
+            {d3Splitting(data.refereePrice)} VND
           </span>
         </p>
 

@@ -6,6 +6,8 @@ enum ROUTE {
   MY_TEAM = "/my-team",
   FIND_FIELD = "/find-field",
   MATCHING = "/matching",
+  ORDER_HISTORY = "/order-history",
+  REFEREE = "/referee",
   PAGE_FORBIDDEN = "/403",
   PAGE_NOT_FOUND = "404",
 }
