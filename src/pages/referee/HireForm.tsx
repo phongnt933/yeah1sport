@@ -74,7 +74,7 @@ function HireForm(props: HireFormProps) {
   return (
     <>
       <Modal
-        title="Thuê trọng tài"
+        title="Thuê trọng tài/huấn luyện viên"
         open={open}
         footer={null}
         destroyOnClose

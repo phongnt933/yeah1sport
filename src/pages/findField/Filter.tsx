@@ -18,6 +18,37 @@ import { FIELD_TYPE } from "src/constants/field";
 import axios from "axios";
 import { omit } from "lodash";
 
+function getNextTimeFrame(): {
+  timeFrame: string;
+  date: string;
+} {
+  const timeFrames = Object.values(ETimeFrame); // Mảng khung giờ
+  const dateToday = dayjs().format("YYYY-MM-DD");
+  const currentHour = dayjs().hour();
+
+  if (currentHour >= 20) {
+    return {
+      timeFrame: timeFrames[0],
+      date: dayjs().add(1, "day").format("YYYY-MM-DD"),
+    };
+  }
+
+  const matchingIndex = timeFrames.findIndex((timeFrame) => {
+    const [startTime, endTime] = timeFrame.split(" - ");
+    const startHour = parseInt(startTime.split(":")[0], 10);
+    const endHour = parseInt(endTime.split(":")[0], 10);
+
+    return currentHour >= startHour && currentHour < endHour;
+  });
+
+  const nextTimeFrame =
+    matchingIndex !== -1 && matchingIndex < timeFrames.length - 1
+      ? timeFrames[matchingIndex + 1]
+      : timeFrames[0];
+
+  return { timeFrame: nextTimeFrame, date: dateToday };
+}
+
 const PROVINCE_API = "https://provinces.open-api.vn/api/p/";
 const DISTRICT_API = "https://provinces.open-api.vn/api/p/";
 const WARD_API = "https://provinces.open-api.vn/api/d/";
@@ -94,39 +125,8 @@ function Filter() {
     }
   };
 
-  useEffect(() => {
-    loadProvinces();
-  }, []);
-
-  const handleProvinceChange = (_value: string, option: any) => {
-    form.setFieldValue("district", undefined);
-    form.setFieldValue("ward", undefined);
-    setWards([]);
-    loadDistricts(option.key);
-  };
-
-  const handleDistrictChange = (_value: string, option: any) => {
-    form.setFieldValue("ward", undefined);
-    loadWards(option.key);
-  };
-
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+  const handleGetListField = async (dataForm: any) => {
     setIsLoading(true);
-    const [startTime, endTime] = values.timeFrame.split(" - ");
-
-    const dataForm = omit({
-      date: dayjs(values.date).format("YYYY-MM-DD"),
-      startTime,
-      endTime,
-      province: values.province,
-      district: values.district,
-      ward: values.ward,
-      type: values.type,
-      capacity: values.capacity,
-      record: Number.MAX_SAFE_INTEGER,
-      page: 1,
-    });
-
     await findField({
       query: { ...dataForm },
       successHandler: {
@@ -146,6 +146,71 @@ function Filter() {
       },
     });
     setIsLoading(false);
+  };
+
+  useEffect(() => {
+    loadProvinces();
+    const { date, timeFrame } = getNextTimeFrame();
+    const [startTime, endTime] = timeFrame.split(" - ");
+
+    form.setFieldValue("date", dayjs(date, "YYYY-MM-DD"));
+    form.setFieldValue("timeFrame", timeFrame);
+
+    handleGetListField({
+      date: date,
+      startTime,
+      endTime,
+    });
+  }, []);
+
+  const handleProvinceChange = (_value: string, option: any) => {
+    form.setFieldValue("district", undefined);
+    form.setFieldValue("ward", undefined);
+    setWards([]);
+    loadDistricts(option.key);
+  };
+
+  const handleDistrictChange = (_value: string, option: any) => {
+    form.setFieldValue("ward", undefined);
+    loadWards(option.key);
+  };
+
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    const [startTime, endTime] = values.timeFrame.split(" - ");
+
+    const dataForm = omit({
+      date: dayjs(values.date).format("YYYY-MM-DD"),
+      startTime,
+      endTime,
+      province: values.province,
+      district: values.district,
+      ward: values.ward,
+      type: values.type,
+      capacity: values.capacity,
+      record: Number.MAX_SAFE_INTEGER,
+      page: 1,
+    });
+
+    await handleGetListField(dataForm);
+
+    // await findField({
+    //   query: { ...dataForm },
+    //   successHandler: {
+    //     callBack(data) {
+    //       setListField(data.data);
+    //       setDateInfo({
+    //         date: dataForm.date,
+    //         startTime: dataForm.startTime,
+    //         endTime: dataForm.endTime,
+    //       });
+    //     },
+    //   },
+    //   errorHandler: {
+    //     callBack() {
+    //       setListField([]);
+    //     },
+    //   },
+    // });
   };
   return (
     <div className="flex gap-8 items-start">

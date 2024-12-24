@@ -42,7 +42,7 @@ function AppHeader() {
               Lịch sử đặt sân
             </NavLink>
             <NavLink className="menu-item" to={ROUTE.REFEREE}>
-              Thuê trọng tài
+              Thuê trọng tài/huấn luyện viên
             </NavLink>
           </div>
           {userInfo ? (

@@ -56,34 +56,36 @@ function RefereePage() {
           >
             <div>
               <Typography.Title level={3} style={{ margin: 0 }}>
-                Thuê trọng tài
+                Thuê trọng tài/huấn luyện viên
               </Typography.Title>
             </div>
-            {data.map((item) => (
-              <div className="referee-container">
-                <img
-                  width={250}
-                  src={IMAGES.referee}
-                  className="rounded-t-xl"
-                />
-                <div className="p-4">
-                  <p className="field-name">{item.name}</p>
-                  <div className="flex items-center justify-between mt-4">
-                    <div className="h-9 flex items-center border border-solid border-black-016 px-3 rounded-md">
-                      <span className="text-sm font-semibold text-highlight">
-                        {d3Splitting(item.price)} VNĐ
-                      </span>
+            <div className="flex gap-6">
+              {data.map((item) => (
+                <div className="referee-container">
+                  <img
+                    width={250}
+                    src={IMAGES.referee}
+                    className="rounded-t-xl"
+                  />
+                  <div className="p-4">
+                    <p className="field-name">{item.name}</p>
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="h-9 flex items-center border border-solid border-black-016 px-3 rounded-md">
+                        <span className="text-sm font-semibold text-highlight">
+                          {d3Splitting(item.price)} VNĐ
+                        </span>
+                      </div>
+                      <Button
+                        onClick={handleOpenHireForm(item)}
+                        className="h-9 cursor-pointer text-sm font-semibold"
+                      >
+                        Thuê
+                      </Button>
                     </div>
-                    <Button
-                      onClick={handleOpenHireForm(item)}
-                      className="h-9 cursor-pointer text-sm font-semibold"
-                    >
-                      Thuê
-                    </Button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </Flex>
           {selectedReferee.data && (
             <HireForm

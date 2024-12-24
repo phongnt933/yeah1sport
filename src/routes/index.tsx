@@ -73,7 +73,7 @@ const routes: AppRoute[] = [
   },
   {
     path: ROUTE.REFEREE,
-    title: "Thuê trọng tài",
+    title: "Thuê trọng tài/huấn luyện viên",
     element: RefereePage,
     isPrivate: true,
   },

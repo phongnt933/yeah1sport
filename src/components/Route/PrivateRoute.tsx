@@ -13,7 +13,7 @@ function PrivateRoute(props: PropsWithChildren<PrivateRouteProps>) {
 
   useEffect(() => {
     document.title = title;
-  }, []);
+  }, [title]);
 
   if (!isLogin) {
     <Navigate to={ROUTE.LOGIN} />;

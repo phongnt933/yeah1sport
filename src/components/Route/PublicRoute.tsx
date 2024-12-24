@@ -9,7 +9,7 @@ function PublicRoute(props: PropsWithChildren<PublicRouteProps>) {
 
   useEffect(() => {
     document.title = title;
-  }, []);
+  }, [title]);
 
   return <>{children}</>;
 }
