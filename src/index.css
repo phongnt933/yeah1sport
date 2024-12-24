@@ -79,7 +79,7 @@ a {
 }
 
 .field-container {
-  min-width: min(300px, calc(100vw - 48px - var(--tdm-scrollbar-width)));
+  min-width: min(260px, calc(100vw - 48px - var(--tdm-scrollbar-width)));
   @apply max-w-[300px] bg-secondary-background rounded-2xl snap-start z-10 flex flex-col;
   box-shadow: 0px 8px 96px 0px rgba(0, 0, 0, 0.12);
 }
