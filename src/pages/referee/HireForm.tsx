@@ -67,6 +67,7 @@ function HireForm(props: HireFormProps) {
 
   const handlePaypalSuccess = () => {
     setPurchaseData(null);
+    reload();
     onClose();
   };
 
